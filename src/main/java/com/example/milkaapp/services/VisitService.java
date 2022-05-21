@@ -16,7 +16,7 @@ public class VisitService implements Converter <VisitDto, Visit> {
 
     private LocalTime dateFinish (VisitDto visitDto) {
         HairDres hairDres = HairDres.valueOf(visitDto.getHairDresEnum());
-        LocalTime timeEnd = visitDto.getTimeStart();
+        LocalTime timeEnd = visitDto.getHourStartVisit();
         int hours = timeEnd.getHour() + hairDres.getHour();
         int minutes = timeEnd.getMinute() + hairDres.getMinutes();
         if(minutes > 60){
@@ -36,8 +36,8 @@ public class VisitService implements Converter <VisitDto, Visit> {
         /*visit.setHairdressing(source.getHairdressing());*/
         visit.setStatus(source.getStatus());
         visit.setHairDresEnum(source.getHairDresEnum());
-        visit.setTimeStart(source.getTimeStart());
-        visit.setTimeEnd(dateFinish(source));
+        visit.setHourStartVisit(source.getHourStartVisit());
+        visit.setHourEndVisit(dateFinish(source));
         visit.setNoteVisit(source.getNoteVisit());
         return visit;
     }

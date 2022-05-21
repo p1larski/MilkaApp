@@ -10,5 +10,5 @@ import java.util.Optional;
 
 @Repository
 public interface VisitRepository extends CrudRepository<Visit, Long> {
-    Optional<Visit> getVisitByTimeStart(LocalTime localTime);
+    Optional<Visit> getVisitByHourStartVisit(LocalTime localTime);
 }

@@ -24,8 +24,8 @@ public class Visit {
     private String status;
     private String noteVisit;
     private String hairDresEnum;
-    private LocalTime timeStart;
-    private LocalTime timeEnd;
+    private LocalTime hourStartVisit;
+    private LocalTime hourEndVisit;
 
     /*@ManyToOne
     private Client client;*/
@@ -36,10 +36,8 @@ public class Visit {
     public Visit() {
     }
 
-    public Visit(String status, String noteVisit/* Date date, Date dateTime*/) {
+    public Visit(String status, String noteVisit) {
         this.status = status;
         this.noteVisit = noteVisit;
-        /*this.date = date;
-        this.dateTime = dateTime;*/
     }
 }

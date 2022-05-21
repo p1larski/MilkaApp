@@ -2,7 +2,6 @@ package com.example.milkaapp.services;
 
 import com.example.milkaapp.models.Day;
 import com.example.milkaapp.models.DayDto;
-import com.example.milkaapp.models.Month;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -31,10 +30,10 @@ public class DayService implements Converter<DayDto, Day> {
             return null;
         }
         final Day day = new Day();
-        day.setHourStart(source.getHourStart());
-        day.setHourEnd(source.getHourEnd());
+        day.setHourStartDay(source.getHourStartDay());
+        day.setHourEndDay(source.getHourEndDay());
         day.setNote(source.getNote());
-        day.setHoursSet(hoursMaker(source.getHourStart(), source.getHourEnd()));
+        day.setHoursSet(hoursMaker(source.getHourStartDay(), source.getHourEndDay()));
         return day;
     }
 }

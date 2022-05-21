@@ -28,7 +28,7 @@ public class VisitController {
     public ResponseEntity<Visit> saveVisit(@RequestBody VisitDto visitDto) throws ParseException {
 
         Visit visit = visitService.convert(visitDto);
-        Optional<Visit> visitOptional = visitRepository.getVisitByTimeStart(visitDto.getTimeStart());
+        Optional<Visit> visitOptional = visitRepository.getVisitByHourStartVisit(visitDto.getHourStartVisit());
         if (!visitOptional.isPresent()) {
             visitRepository.save(visit);
             return ResponseEntity.status(HttpStatus.CREATED).body(visit);

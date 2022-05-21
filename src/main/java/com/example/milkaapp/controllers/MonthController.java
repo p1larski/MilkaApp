@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,25 +35,25 @@ public class MonthController {
 
     @GetMapping("/calendar")
     public List<Month> getCalendars() {
+        monthRepository.findAll().forEach(month -> System.out.println(month.getDays()));
         return (List<Month>) monthRepository.findAll();
     }
 
     @PostMapping("/month/new/save")
     public ResponseEntity<Month> saveMonth(@RequestBody MonthDto monthDto) {
-        Optional<Month> calendarOptional = Optional.ofNullable(monthRepository.getCalendarById(monthDto.getId()));
+        Optional<Month> calendarOptional = monthRepository.getCalendarByDate(monthDto.getDate());
         Month month = monthService.convert(monthDto);
         if (!calendarOptional.isPresent()) {
             monthRepository.save(month);
-            System.out.println(month);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(month);
     }
 
     @DeleteMapping(value = {"/month/{id}"})
-    public ResponseEntity<Month> deleteMonth(@PathVariable Long id) {
-        if (monthRepository.getCalendarById(id) != null) {
-            Month month = monthRepository.getCalendarById(id);
-            monthRepository.delete(month);
+    public ResponseEntity<Month> deleteMonth(@PathVariable YearMonth id) {
+        Optional<Month> monthOptional = monthRepository.getCalendarByDate(id).stream().findFirst();
+        if (monthOptional != null) {
+            monthRepository.delete(monthOptional.get());
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();

@@ -10,10 +10,10 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.GregorianCalendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Component
 public class MonthService implements Converter<MonthDto, Month> {
@@ -29,21 +29,18 @@ public class MonthService implements Converter<MonthDto, Month> {
     public Month convert(MonthDto source) {
 
         final Month month = new Month();
-        java.util.Calendar calendar1 = java.util.Calendar.getInstance();
-        int year = calendar1.get(java.util.Calendar.YEAR);
-        GregorianCalendar dateMonthAndYear = new GregorianCalendar(year,source.getMonth(),0);
-        YearMonth yearMonth = YearMonth.of(1999, java.time.Month.FEBRUARY);
-        yearMonth.getMonth().length(false);
+
+        YearMonth yearMonth = YearMonth.of(source.getYear(), source.getMonth());
         Set<Day> daySet = new HashSet<>();
-        for (int i = 1; i <= source.getCountOfDays(); i++ ){
+        for (int i = 1; i <= yearMonth.getMonth().length(yearMonth.isLeapYear()); i++ ){
             Day day = new Day();
+            day.setDate(LocalDate.of(yearMonth.getYear(),yearMonth.getMonth(),i));
             dayRepository.save(day);
             daySet.add(day);
         }
+        daySet.stream().forEach(day -> month.addDay(day));
+        month.setDate(yearMonth);
         month.setDays(daySet);
-        month.setMonth(source.getMonth());
-        month.setYear(year);
-        month.setCountOfDays(source.getCountOfDays());
         return month;
     }
 }

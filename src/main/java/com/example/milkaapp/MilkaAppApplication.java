@@ -16,7 +16,7 @@ import java.util.stream.Stream;
 import static java.util.Calendar.HOUR;
 import static java.util.Calendar.MINUTE;
 
-/*@SpringBootApplication*/
+@SpringBootApplication
 public class MilkaAppApplication {
 
    /* public int compareTo(String s1, String s2){
@@ -38,11 +38,11 @@ public class MilkaAppApplication {
 
 
     public static void main(String[] args) {
-        /*SpringApplication.run(MilkaAppApplication.class, args);*/
-        YearMonth yearMonth = YearMonth.of(1999, java.time.Month.FEBRUARY);
+        SpringApplication.run(MilkaAppApplication.class, args);
+        /*YearMonth yearMonth = YearMonth.of(1999, java.time.Month.FEBRUARY);
         System.out.println(yearMonth.getMonth().length(true));
         System.out.println(yearMonth.getMonth().getValue());
         GregorianCalendar dateMonthAndYear = new GregorianCalendar(2000,Calendar.FEBRUARY,1);
-        System.out.println(dateMonthAndYear.getActualMaximum(Calendar.DAY_OF_MONTH));
+        System.out.println(dateMonthAndYear.getActualMaximum(Calendar.DAY_OF_MONTH));*/
     }
 }

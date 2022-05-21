@@ -5,16 +5,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalTime;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class DayDto {
-    private Date date;
-    private int hourStart;
-    private int hourEnd;
+    private GregorianCalendar date;
+    private int hourStartDay;
+    private int hourEndDay;
     private String note;
     private Set<LocalTime> hoursSet;
 }

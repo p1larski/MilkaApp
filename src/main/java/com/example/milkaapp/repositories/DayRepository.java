@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface DayRepository extends CrudRepository<Day, Long> {
-    Optional<Day> findByHourStart(int ainrt);
+    Optional<Day> findByHourStartDay(int ainrt);
 }

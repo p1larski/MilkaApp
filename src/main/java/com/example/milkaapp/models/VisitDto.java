@@ -17,8 +17,8 @@ public class VisitDto {
     private String status;
     private String noteVisit;
     private String hairDresEnum;
-    private LocalTime timeStart;
-    private LocalTime timeEnd;
+    private LocalTime hourStartVisit;
+    private LocalTime hourEndVisit;
     /*private Set<Hairdressing> hairdressing;
     private Day day;*/
 }

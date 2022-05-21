@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import javax.persistence.*;
+import java.time.YearMonth;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,24 +17,18 @@ public class Month {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private GregorianCalendar monthAndYear;
-    private int month;
-    private int year;
+    private YearMonth date;
     private boolean done;
-    private int countOfDays;
 
     public Month() {
     }
 
-    public Month(int month, int year, boolean done, int countOfDays, Set<Day> days) {
-        this.month = month;
-        this.year = year;
+    public Month( boolean done, Set<Day> days) {
         this.done = done;
-        this.countOfDays = countOfDays;
         this.days = days;
     }
 
-    @OneToMany(mappedBy = "month")
+    @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
     private Set<Day> days = new HashSet<>();
 
     public void addDay (Day day){

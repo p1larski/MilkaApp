@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -16,17 +17,16 @@ public class Day {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Date date;
-    private int hourStart;
-    private int hourEnd;
+    private LocalDate date;
+    private int hourStartDay;
+    private int hourEndDay;
     private String note;
     @ElementCollection
     private Set<LocalTime> hoursSet;
 
-    @ToString.Exclude
     @JsonBackReference
+    @ToString.Exclude
     @ManyToOne
-    @JoinColumn(name = "month_id")
     private Month month;
 
     @OneToMany
@@ -35,12 +35,12 @@ public class Day {
     public Day() {
     }
 
-    public Day(Long id,Month month,Date date, int hourStart, int hourEnd, String note, Set<Visit> visit) {
+    public Day(Long id, Month month, LocalDate date, int hourStartDay, int hourEndDay, String note, Set<Visit> visit) {
         this.id = id;
         this.date = date;
         this.month = month;
-        this.hourStart = hourStart;
-        this.hourEnd = hourEnd;
+        this.hourStartDay = hourStartDay;
+        this.hourEndDay = hourEndDay;
         this.note = note;
         this.visit = visit;
     }

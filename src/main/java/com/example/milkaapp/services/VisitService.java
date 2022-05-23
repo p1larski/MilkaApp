@@ -1,11 +1,15 @@
 package com.example.milkaapp.services;
 
+import com.example.milkaapp.models.Day;
 import com.example.milkaapp.models.HairDres;
 import com.example.milkaapp.models.Visit;
 import com.example.milkaapp.models.VisitDto;
+import com.example.milkaapp.repositories.DayRepository;
 import lombok.SneakyThrows;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 
@@ -13,6 +17,11 @@ import java.time.LocalTime;
 @Component
 public class VisitService implements Converter <VisitDto, Visit> {
 
+    private DayRepository dayRepository;
+
+    public VisitService(DayRepository dayRepository) {
+        this.dayRepository = dayRepository;
+    }
 
     private LocalTime dateFinish (VisitDto visitDto) {
         HairDres hairDres = HairDres.valueOf(visitDto.getHairDresEnum());
@@ -39,7 +48,10 @@ public class VisitService implements Converter <VisitDto, Visit> {
         visit.setHourStartVisit(source.getHourStartVisit());
         visit.setHourEndVisit(dateFinish(source));
         visit.setNoteVisit(source.getNoteVisit());
+        LocalDate tim = source.getDate();
+        Day dayVisit = dayRepository.findDayByDate(tim);
+        dayVisit.addVisit(visit);
+        visit.setDay(dayVisit);
         return visit;
     }
-
 }

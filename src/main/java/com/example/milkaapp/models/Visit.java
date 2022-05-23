@@ -1,5 +1,6 @@
 package com.example.milkaapp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,8 +30,10 @@ public class Visit {
 
     /*@ManyToOne
     private Client client;*/
-    
-    @ManyToOne
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dayId")
     private Day day;
 
     public Visit() {

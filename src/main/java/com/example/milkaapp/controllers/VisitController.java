@@ -25,10 +25,9 @@ public class VisitController {
     }
 
     @PostMapping("/visit/new/save")
-    public ResponseEntity<Visit> saveVisit(@RequestBody VisitDto visitDto) throws ParseException {
-
+    public ResponseEntity<Visit> saveVisit(@RequestBody VisitDto visitDto) {
         Visit visit = visitService.convert(visitDto);
-        Optional<Visit> visitOptional = visitRepository.getVisitByHourStartVisit(visitDto.getHourStartVisit());
+        Optional<Visit> visitOptional = visitRepository.getVisitByNoteVisit(visitDto.getNoteVisit());
         if (!visitOptional.isPresent()) {
             visitRepository.save(visit);
             return ResponseEntity.status(HttpStatus.CREATED).body(visit);

@@ -49,9 +49,9 @@ public class MonthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(month);
     }
 
-    @DeleteMapping(value = {"/month/{id}"})
-    public ResponseEntity<Month> deleteMonth(@PathVariable YearMonth id) {
-        Optional<Month> monthOptional = monthRepository.getCalendarByDate(id).stream().findFirst();
+    @DeleteMapping(value = {"/month/{yearAndMonth}"})
+    public ResponseEntity<Month> deleteMonth(@PathVariable YearMonth yearAndMonth) {
+        Optional<Month> monthOptional = monthRepository.getCalendarByDate(yearAndMonth);
         if (monthOptional != null) {
             monthRepository.delete(monthOptional.get());
             return ResponseEntity.noContent().build();

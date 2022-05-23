@@ -30,6 +30,7 @@ public class DayService implements Converter<DayDto, Day> {
             return null;
         }
         final Day day = new Day();
+        day.setDate(source.getDate());
         day.setHourStartDay(source.getHourStartDay());
         day.setHourEndDay(source.getHourEndDay());
         day.setNote(source.getNote());

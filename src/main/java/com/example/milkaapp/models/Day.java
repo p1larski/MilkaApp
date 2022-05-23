@@ -29,19 +29,23 @@ public class Day {
     @ManyToOne
     private Month month;
 
-    @OneToMany
-    private Set<Visit> visit;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "day",cascade = CascadeType.ALL)
+    private Set<Visit> visitSet;
 
     public Day() {
     }
 
-    public Day(Long id, Month month, LocalDate date, int hourStartDay, int hourEndDay, String note, Set<Visit> visit) {
+    public Day(Long id, Month month, LocalDate date, int hourStartDay, int hourEndDay, String note, Set<Visit> visitSet) {
         this.id = id;
         this.date = date;
         this.month = month;
         this.hourStartDay = hourStartDay;
         this.hourEndDay = hourEndDay;
         this.note = note;
-        this.visit = visit;
+        this.visitSet = visitSet;
+    }
+    public void addVisit (Visit visit){
+        visitSet.add(visit);
     }
 }

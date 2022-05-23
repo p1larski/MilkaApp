@@ -14,6 +14,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 public class VisitDto {
+    private LocalDate date;
     private String status;
     private String noteVisit;
     private String hairDresEnum;

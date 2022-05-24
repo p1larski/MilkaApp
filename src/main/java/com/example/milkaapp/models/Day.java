@@ -47,7 +47,7 @@ public class Day implements Comparable<Day> {
     }
     @Override
     public int compareTo(Day day){
-        return this.getId().compareTo(day.getId());
+        return this.getDate().compareTo(day.getDate());
     }
 
     public void addVisit (Visit visit){

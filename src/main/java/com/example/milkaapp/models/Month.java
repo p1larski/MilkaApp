@@ -2,10 +2,8 @@ package com.example.milkaapp.models;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import javax.persistence.*;
 import java.time.YearMonth;
-import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 

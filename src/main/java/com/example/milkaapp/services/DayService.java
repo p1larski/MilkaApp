@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 @Component
 public class DayService implements Converter<DayDto, Day> {
 
-    public Set<LocalTime> hoursMaker (int a, int b) {
-        Set<LocalTime> times = new TreeSet<>();
+    public TreeSet<LocalTime> hoursMaker (int a, int b) {
+        TreeSet<LocalTime> times = new TreeSet<>();
         for (int i = a; i < b; i++) {
-            for (int j = 0; j < 60; j = j + 15) {
+            for (int j = 0; j < 60; j = j + 30) {
                 LocalTime localTime = LocalTime.of(i, j);
                 times.add(localTime);
             }

@@ -37,9 +37,8 @@ public class MonthService implements Converter<MonthDto, Month> {
             dayRepository.save(day);
             daysList.add(day);
         }
-        daysList.sort(Comparator.comparing(Day::getId));
-        daysList.stream().forEach(day -> month.addDay(day));
-        Set<Day> sortedSetOfDays = new TreeSet<>(daysList);
+        TreeSet<Day> sortedSetOfDays = new TreeSet<>(daysList);
+        sortedSetOfDays.stream().forEach(day -> month.addDay(day));
         month.setDate(yearMonth);
         month.setDays(sortedSetOfDays);
         return month;

@@ -4,7 +4,7 @@ import java.time.LocalTime;
 
 public enum HairDres {
 
-    CIĘCIE(2,0), KOLORYZACJA(0,30), PIELĘGNACJA(1,30);
+    CIĘCIE(1,0), KOLORYZACJA(0,30), PIELĘGNACJA(1,30);
 
     int hour;
     int minutes;

@@ -35,7 +35,6 @@ public class MonthController {
 
     @GetMapping("/calendar")
     public List<Month> getCalendars() {
-        monthRepository.findAll().forEach(month -> System.out.println(month.getDays()));
         return (List<Month>) monthRepository.findAll();
     }
 

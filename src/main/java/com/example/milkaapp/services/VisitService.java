@@ -11,7 +11,11 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
+import static java.time.temporal.ChronoUnit.HOURS;
 
 
 @Component
@@ -47,6 +51,23 @@ public class VisitService implements Converter <VisitDto, Visit> {
         visit.setHourEndVisit(dateFinish(source));
         visit.setNoteVisit(source.getNoteVisit());
         visit.setDay(dayRepository.findDayByDate(source.getDate()));
+        Day dayOfVisit = dayRepository.findDayByDate(source.getDate());
+        List<LocalTime> freeHoursInDay = new ArrayList<>(dayOfVisit.getHoursSet());
+
+        System.out.println(freeHoursInDay);
+        freeHoursInDay.stream()
+                .filter(hor -> hor.isAfter(visit.getHourStartVisit()) && hor.isBefore(visit.getHourEndVisit())
+                        || hor.equals(visit.getHourStartVisit()) || hor.equals(visit.getHourEndVisit()))
+                .forEach(localTime -> System.out.println("localTime"));
+
+        Predicate<LocalTime> isInRange = localTime -> localTime.isAfter(visit.getHourStartVisit()) && localTime.isBefore(visit.getHourEndVisit())
+                || localTime.equals(visit.getHourStartVisit()) || localTime.equals(visit.getHourEndVisit());
+
+        freeHoursInDay.removeIf(isInRange);
+
+        System.out.println(freeHoursInDay);
+        System.out.println(HOURS.between(visit.getHourStartVisit(),visit.getHourEndVisit()));
+
         return visit;
     }
 }

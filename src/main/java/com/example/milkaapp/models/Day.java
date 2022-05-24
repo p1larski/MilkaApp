@@ -12,7 +12,7 @@ import java.util.*;
 @Data
 @EqualsAndHashCode(of = "id")
 @Entity
-public class Day {
+public class Day implements Comparable<Day> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,6 +45,11 @@ public class Day {
         this.note = note;
         this.visitSet = visitSet;
     }
+    @Override
+    public int compareTo(Day day){
+        return this.getId().compareTo(day.getId());
+    }
+
     public void addVisit (Visit visit){
         visitSet.add(visit);
     }

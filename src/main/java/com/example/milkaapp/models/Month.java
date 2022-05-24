@@ -35,5 +35,4 @@ public class Month {
         days.add(day);
         day.setMonth(this);
     }
-
 }

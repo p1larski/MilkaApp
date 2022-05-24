@@ -3,7 +3,6 @@ package com.example.milkaapp.services;
 import com.example.milkaapp.models.MonthDto;
 import com.example.milkaapp.models.Month;
 import com.example.milkaapp.models.Day;
-import com.example.milkaapp.repositories.MonthRepository;
 import com.example.milkaapp.repositories.DayRepository;
 import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
@@ -31,16 +30,18 @@ public class MonthService implements Converter<MonthDto, Month> {
         final Month month = new Month();
 
         YearMonth yearMonth = YearMonth.of(source.getYear(), source.getMonth());
-        Set<Day> daySet = new HashSet<>();
+        List<Day> daysList = new ArrayList<>();
         for (int i = 1; i <= yearMonth.getMonth().length(yearMonth.isLeapYear()); i++ ){
             Day day = new Day();
             day.setDate(LocalDate.of(yearMonth.getYear(),yearMonth.getMonth(),i));
             dayRepository.save(day);
-            daySet.add(day);
+            daysList.add(day);
         }
-        daySet.stream().forEach(day -> month.addDay(day));
+        daysList.sort(Comparator.comparing(Day::getId));
+        daysList.stream().forEach(day -> month.addDay(day));
+        Set<Day> sortedSetOfDays = new TreeSet<>(daysList);
         month.setDate(yearMonth);
-        month.setDays(daySet);
+        month.setDays(sortedSetOfDays);
         return month;
     }
 }

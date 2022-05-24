@@ -37,21 +37,16 @@ public class VisitService implements Converter <VisitDto, Visit> {
             LocalTime localTime = LocalTime.of(hours, minutes);
         return localTime;
     }
-    @SneakyThrows
+
     @Override
     public Visit convert(VisitDto source) {
         Visit visit = new Visit();
-
-        /*visit.setHairdressing(source.getHairdressing());*/
         visit.setStatus(source.getStatus());
         visit.setHairDresEnum(source.getHairDresEnum());
         visit.setHourStartVisit(source.getHourStartVisit());
         visit.setHourEndVisit(dateFinish(source));
         visit.setNoteVisit(source.getNoteVisit());
-        LocalDate tim = source.getDate();
-        Day dayVisit = dayRepository.findDayByDate(tim);
-        dayVisit.addVisit(visit);
-        visit.setDay(dayVisit);
+        visit.setDay(dayRepository.findDayByDate(source.getDate()));
         return visit;
     }
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -16,5 +17,5 @@ public class DayDto {
     private int hourStartDay;
     private int hourEndDay;
     private String note;
-    private Set<LocalTime> hoursSet;
+    private List<LocalTime> hoursSet;
 }

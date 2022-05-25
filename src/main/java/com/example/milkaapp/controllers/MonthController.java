@@ -1,5 +1,6 @@
 package com.example.milkaapp.controllers;
 
+import com.example.milkaapp.models.Day;
 import com.example.milkaapp.models.MonthDto;
 import com.example.milkaapp.models.Month;
 import com.example.milkaapp.services.MonthService;
@@ -8,9 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.time.YearMonth;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.function.Predicate;
 
 @RestController
 public class MonthController {
@@ -35,7 +37,9 @@ public class MonthController {
 
     @GetMapping("/calendar")
     public List<Month> getCalendars() {
-        return (List<Month>) monthRepository.findAll();
+        List<Month> monthList = new ArrayList<>((Collection<? extends Month>) monthRepository.findAll());
+        List<Month> does = new ArrayList<>(monthService.monthsWithSortedDays(monthList));
+        return does;
     }
 
     @PostMapping("/month/new/save")

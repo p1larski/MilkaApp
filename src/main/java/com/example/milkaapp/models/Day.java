@@ -22,7 +22,7 @@ public class Day implements Comparable<Day> {
     private int hourEndDay;
     private String note;
     @ElementCollection
-    private Set<LocalTime> hoursSet;
+    private List<LocalTime> hoursSet;
 
     @JsonBackReference
     @ToString.Exclude

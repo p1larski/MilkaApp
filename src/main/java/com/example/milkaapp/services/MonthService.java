@@ -21,6 +21,21 @@ public class MonthService implements Converter<MonthDto, Month> {
     public MonthService(DayRepository dayRepository) {
         this.dayRepository = dayRepository;
     }
+    public List<Month> monthsWithSortedDays(List<Month> months){
+        List<Month> monthList = new ArrayList<>(months);
+        List<Day> daysInMonth = new ArrayList<>();
+        List<Month> monthsSortedDays = new ArrayList<>();
+        monthList.stream().forEach(month -> {
+            daysInMonth.clear();
+            daysInMonth.addAll(month.getDays());
+            Collections.sort(daysInMonth);
+            Set<Day> daysSorted = new TreeSet<>();
+            daysSorted.addAll(daysInMonth);
+            month.setDays(daysSorted);
+            monthsSortedDays.add(month);
+        });
+        return monthsSortedDays;
+    }
 
     @Synchronized
     @Nullable

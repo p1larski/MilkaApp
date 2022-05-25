@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.YearMonth;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 @Data
 @EqualsAndHashCode(of = {"id"})
@@ -27,7 +28,7 @@ public class Month {
     }
 
     @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
-    private Set<Day> days = new HashSet<>();
+    private Set<Day> days = new TreeSet<>();
 
     public void addDay (Day day){
         days.add(day);

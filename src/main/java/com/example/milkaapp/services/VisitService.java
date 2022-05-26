@@ -23,9 +23,11 @@ import static java.time.temporal.ChronoUnit.HOURS;
 public class VisitService implements Converter <VisitDto, Visit> {
 
     private DayRepository dayRepository;
+    private DayService dayService;
 
-    public VisitService(DayRepository dayRepository) {
+    public VisitService(DayRepository dayRepository, DayService dayService) {
         this.dayRepository = dayRepository;
+        this.dayService = dayService;
     }
 
     private LocalTime dateFinish (VisitDto visitDto) {
@@ -43,6 +45,8 @@ public class VisitService implements Converter <VisitDto, Visit> {
         return localTime;
     }
 
+
+
     @Override
     public Visit convert(VisitDto source) {
         Visit visit = new Visit();
@@ -54,16 +58,16 @@ public class VisitService implements Converter <VisitDto, Visit> {
         visit.setDay(dayRepository.findDayByDate(source.getDate()));
 
         Day dayOfVisit = dayRepository.findDayByDate(source.getDate());
-        List<LocalTime> freeHoursInDay = new ArrayList<>(dayOfVisit.getHoursSet());
+        /*List<LocalTime> freeHoursInDay = new ArrayList<>(dayOfVisit.getHoursSet());
 
         Predicate<LocalTime> isInRange = localTime ->
                    localTime.isAfter(visit.getHourStartVisit())
                 && localTime.isBefore(visit.getHourEndVisit())
                 || localTime.equals(visit.getHourStartVisit());
 
-        freeHoursInDay.removeIf(isInRange);
+        freeHoursInDay.removeIf(isInRange);*/
 
-        dayOfVisit.setHoursSet(/*new TreeSet<>(freeHoursInDay)*/freeHoursInDay);
+        dayOfVisit.setHoursSet(/*freeHoursInDay*/ dayService.hoursReadyToBook(dayOfVisit.getHoursSet(), visit));
         return visit;
     }
 }

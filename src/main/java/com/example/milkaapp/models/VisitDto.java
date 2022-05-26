@@ -20,6 +20,5 @@ public class VisitDto {
     private String hairDresEnum;
     private LocalTime hourStartVisit;
     private LocalTime hourEndVisit;
-    /*private Set<Hairdressing> hairdressing;
-    private Day day;*/
+
 }

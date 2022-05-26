@@ -17,10 +17,13 @@ import java.util.stream.Collectors;
 @Component
 public class MonthService implements Converter<MonthDto, Month> {
     private DayRepository dayRepository;
+    private DayService dayService;
 
-    public MonthService(DayRepository dayRepository) {
+    public MonthService(DayRepository dayRepository, DayService dayService) {
         this.dayRepository = dayRepository;
+        this.dayService = dayService;
     }
+
     public List<Month> monthsWithSortedDays(List<Month> months){
         List<Month> monthList = new ArrayList<>(months);
         List<Day> daysInMonth = new ArrayList<>();
@@ -48,6 +51,9 @@ public class MonthService implements Converter<MonthDto, Month> {
         List<Day> daysList = new ArrayList<>();
         for (int i = 1; i <= yearMonth.getMonth().length(yearMonth.isLeapYear()); i++ ){
             Day day = new Day();
+            day.setHourStartDay(9);
+            day.setHourEndDay(19);
+            day.setHoursSet(dayService.hoursMaker(day.getHourStartDay(),day.getHourEndDay()));
             day.setDate(LocalDate.of(yearMonth.getYear(),yearMonth.getMonth(),i));
             dayRepository.save(day);
             daysList.add(day);

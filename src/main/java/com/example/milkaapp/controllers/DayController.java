@@ -1,18 +1,13 @@
 package com.example.milkaapp.controllers;
 
-import com.example.milkaapp.models.Day;
-import com.example.milkaapp.models.DayDto;
-import com.example.milkaapp.models.Month;
-import com.example.milkaapp.models.MonthDto;
+import com.example.milkaapp.models.*;
 import com.example.milkaapp.repositories.DayRepository;
 import com.example.milkaapp.services.DayService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -41,5 +36,10 @@ public class DayController {
     @GetMapping("/days")
     public List<Day> getDays() {
         return (List<Day>) dayRepository.findAll();
+    }
+
+    @PutMapping("/day/{id}")
+    public Day dayHourSet(@PathVariable Long id, @RequestBody DayDto dayDto){
+        return dayService.updateDayHourSet(dayDto);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.milkaapp.models;
+package com.example.milkaapp.models.modelsDto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

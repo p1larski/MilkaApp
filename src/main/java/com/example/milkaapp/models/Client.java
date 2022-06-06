@@ -18,8 +18,8 @@ public class Client {
     private String lastname;
     private String adress;
     private Long phoneNumber;
-    @OneToMany
-    private Set<Visit> visit;
+    /*@OneToMany
+    private Set<Visit> visit;*/
     /*private Visit visit;*/
 
     public Client(){

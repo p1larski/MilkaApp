@@ -3,20 +3,15 @@ package com.example.milkaapp.services;
 import com.example.milkaapp.models.Day;
 import com.example.milkaapp.models.HairDres;
 import com.example.milkaapp.models.Visit;
-import com.example.milkaapp.models.VisitDto;
+import com.example.milkaapp.models.modelsDto.VisitDto;
 import com.example.milkaapp.repositories.DayRepository;
-import lombok.SneakyThrows;
+import com.example.milkaapp.repositories.VisitRepository;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.function.Predicate;
-
-import static java.time.temporal.ChronoUnit.HOURS;
+import java.util.Optional;
 
 
 @Component
@@ -24,10 +19,13 @@ public class VisitService implements Converter <VisitDto, Visit> {
 
     private DayRepository dayRepository;
     private DayService dayService;
+    private VisitRepository visitRepository;
 
-    public VisitService(DayRepository dayRepository, DayService dayService) {
+    public VisitService(DayRepository dayRepository, DayService dayService,
+                        VisitRepository visitRepository) {
         this.dayRepository = dayRepository;
         this.dayService = dayService;
+        this.visitRepository = visitRepository;
     }
 
     private LocalTime dateFinish (VisitDto visitDto) {
@@ -58,16 +56,19 @@ public class VisitService implements Converter <VisitDto, Visit> {
         visit.setDay(dayRepository.findDayByDate(source.getDate()));
 
         Day dayOfVisit = dayRepository.findDayByDate(source.getDate());
-        /*List<LocalTime> freeHoursInDay = new ArrayList<>(dayOfVisit.getHoursSet());
-
-        Predicate<LocalTime> isInRange = localTime ->
-                   localTime.isAfter(visit.getHourStartVisit())
-                && localTime.isBefore(visit.getHourEndVisit())
-                || localTime.equals(visit.getHourStartVisit());
-
-        freeHoursInDay.removeIf(isInRange);*/
-
-        dayOfVisit.setHoursSet(/*freeHoursInDay*/ dayService.hoursReadyToBook(dayOfVisit.getHoursSet(), visit));
+        dayOfVisit.setHoursSet(dayService.hoursReadyToBook(dayOfVisit.getHoursSet(), visit));
         return visit;
+    }
+    public Visit addVisit(VisitDto visitDto){
+        Visit visit = convert(visitDto);
+        Optional<Visit> visitOptional = visitRepository.getVisitByNoteVisit(visitDto.getNoteVisit());
+        if (!visitOptional.isPresent()) {
+            visitRepository.save(visit);
+        }
+        return visit;
+    }
+    public String deleteVisit(LocalDate date, LocalTime hourStart){
+      visitRepository.delete(visitRepository.getVisitByHourStartVisitAndDay(hourStart, dayRepository.findDayByDate(date)));
+        return "Pomyślnie usunięto zaplanowaną wizytę";
     }
 }

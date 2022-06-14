@@ -19,9 +19,10 @@ public class Day implements Comparable<Day> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
-    private int hourStartDay;
-    private int hourEndDay;
+    private float hourStartDay;
+    private float hourEndDay;
     private String note;
+
     @ElementCollection
     private List<LocalTime> hoursSet;
 

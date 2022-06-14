@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class DayController {
 
@@ -31,7 +32,16 @@ public class DayController {
     }
 
     @PutMapping("/day/{id}")
-    public Day dayHourSet(@PathVariable Long id, @RequestBody DayDto dayDto){
-        return dayService.updateDayHourSet(dayDto);
+    public Day updateDayHourSet(@PathVariable Long id, @RequestBody DayDto dayDto){
+        return dayService.updateDayHourSet(id, dayDto.getHourStartDay(), dayDto.getHourEndDay());
+    }
+
+    @GetMapping("/day/{id}")
+    public Day getDay(@PathVariable Long id){
+        return dayService.getDayById(id);
+    }
+    @DeleteMapping("/day/{id}")
+    public String deleteDayById(@PathVariable Long id){
+        return dayService.deleteDayById(id);
     }
 }

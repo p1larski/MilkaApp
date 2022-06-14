@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Component
 public class MonthService implements Converter<MonthDto, Month> {
@@ -90,5 +91,11 @@ public class MonthService implements Converter<MonthDto, Month> {
         } else {
             return "Podany miesiąc nie istnieje";
         }
+    }
+    public int countOfMonths(){
+        AtomicInteger counter = new AtomicInteger();
+        monthRepository.findAll().forEach(month -> counter.set(counter.get() + 1));
+        System.out.println(counter);
+        return counter.get();
     }
 }

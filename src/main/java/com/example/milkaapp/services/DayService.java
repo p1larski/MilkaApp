@@ -23,14 +23,21 @@ public class DayService implements Converter<DayDto, Day> {
         this.dayRepository = dayRepository;
     }
 
-    public List<LocalTime> hourSetMaker(int hourStart, int hourEnd) {
+    public List<LocalTime> hourSetMaker(float hourStart, float hourEnd) {
         List<LocalTime> times = new ArrayList<>();
-        for (int i = hourStart; i < hourEnd; i++) {
-            for (int j = 0; j < 60; j = j + 30) {
-                LocalTime localTime = LocalTime.of(i, j);
-                times.add(localTime);
+            for (int i = (int) hourStart; i < hourEnd; i++) {
+                for (int j = 0; j < 60; j = j + 30) {
+                    LocalTime localTime = LocalTime.of(i, j);
+                    times.add(localTime);
+                }
             }
-        }
+            if (hourStart % 1 != 0){
+                times.remove(0);
+            }
+            if (hourEnd % 1 != 0){
+                times.remove(times.size()-1);
+            }
+
         return times;
     }
 
@@ -44,10 +51,10 @@ public class DayService implements Converter<DayDto, Day> {
         return listOfEmptyHours;
     }
 
-    public Day updateDayHourSet(DayDto dayDto){
-        Day day = dayRepository.findDayByDate(dayDto.getDate());
-        day.setHourStartDay(dayDto.getHourStartDay());
-        day.setHourEndDay(dayDto.getHourEndDay());
+    public Day updateDayHourSet(Long id, float hourStart, float hourEnd){
+        Day day = dayRepository.findDayById(id);
+        day.setHourStartDay(hourStart);
+        day.setHourEndDay(hourEnd);
         day.setHoursSet(hourSetMaker(day.getHourStartDay(),day.getHourEndDay()));
         day.getVisitSet().stream()
                 .forEach(visit -> day.setHoursSet(hoursReadyToBook(day.getHoursSet(), visit)));
@@ -79,5 +86,12 @@ public class DayService implements Converter<DayDto, Day> {
 
     public List<Day> getAllDays(){
         return (List<Day>) dayRepository.findAll();
+    }
+    public Day getDayById(Long id){
+        return dayRepository.findDayById(id);
+    }
+    public String deleteDayById(Long id){
+        dayRepository.delete(dayRepository.findDayById(id));
+        return "Day deleted successfully";
     }
 }

@@ -13,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class DayDto {
     private LocalDate date;
-    private int hourStartDay;
-    private int hourEndDay;
+    private float hourStartDay;
+    private float hourEndDay;
     private String note;
     private List<LocalTime> hoursSet;
 }

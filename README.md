@@ -31,7 +31,7 @@ Application contains few moudles:
                         <p>
                           Database access u can configure in application.properties file.
                       <p>
-                        After download  and properly configuration u can start application. 
+                        After download  and properly configuration u can start application, default adress is localhost:8080. 
                         <p>
                         For communication with endpoints i was using PostMan application for creating requests and receive responses
                   

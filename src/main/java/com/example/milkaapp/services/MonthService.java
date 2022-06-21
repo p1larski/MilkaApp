@@ -11,6 +11,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.YearMonth;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -56,8 +57,8 @@ public class MonthService implements Converter<MonthDto, Month> {
         List<Day> daysList = new ArrayList<>();
         for (int i = 1; i <= yearMonth.getMonth().length(yearMonth.isLeapYear()); i++ ){
             Day day = new Day();
-            day.setHourStartDay(9);
-            day.setHourEndDay(19);
+            day.setHourStartDay(LocalTime.of(9,0));
+            day.setHourEndDay(LocalTime.of(19,0));
             day.setHoursSet(dayService.hourSetMaker(day.getHourStartDay(),day.getHourEndDay()));
             day.setDate(LocalDate.of(yearMonth.getYear(),yearMonth.getMonth(),i));
             dayRepository.save(day);
@@ -97,5 +98,9 @@ public class MonthService implements Converter<MonthDto, Month> {
         monthRepository.findAll().forEach(month -> counter.set(counter.get() + 1));
         System.out.println(counter);
         return counter.get();
+    }
+    public Month getMonthByYearMonth(YearMonth yearMonth){
+        Month month = monthRepository.getMonthByDate(yearMonth);
+        return month;
     }
 }

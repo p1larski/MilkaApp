@@ -19,11 +19,14 @@ public class Day implements Comparable<Day> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
-    private float hourStartDay;
-    private float hourEndDay;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime hourStartDay;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime hourEndDay;
     private String note;
 
     @ElementCollection
+    @JsonFormat(pattern = "HH:mm")
     private List<LocalTime> hoursSet;
 
     @JsonBackReference
@@ -38,7 +41,7 @@ public class Day implements Comparable<Day> {
     public Day() {
     }
 
-    public Day(Long id, Month month, LocalDate date, int hourStartDay, int hourEndDay, String note, Set<Visit> visitSet) {
+    public Day(Long id, Month month, LocalDate date, LocalTime hourStartDay, LocalTime hourEndDay, String note, Set<Visit> visitSet) {
         this.id = id;
         this.date = date;
         this.month = month;

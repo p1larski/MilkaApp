@@ -37,5 +37,9 @@ public class MonthController {
     public String deleteMonth(@PathVariable YearMonth yearAndMonth) {
         return monthService.deleteMonth(yearAndMonth);
     }
+    @GetMapping(value = {"/month/{yearMonth}"})
+    public Month getMonthByYearMonth(@PathVariable YearMonth yearMonth){
+        return monthService.getMonthByYearMonth(yearMonth);
+    }
 }
 

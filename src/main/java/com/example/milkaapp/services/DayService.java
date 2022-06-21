@@ -23,18 +23,32 @@ public class DayService implements Converter<DayDto, Day> {
         this.dayRepository = dayRepository;
     }
 
-    public List<LocalTime> hourSetMaker(float hourStart, float hourEnd) {
+    public List<LocalTime> hourSetMaker(LocalTime hourStart, LocalTime hourEnd) {
+        int hourStartA = hourStart.getHour();
+        int hourEndA = hourEnd.getHour();
         List<LocalTime> times = new ArrayList<>();
-            for (int i = (int) hourStart; i < hourEnd; i++) {
-                for (int j = 0; j < 60; j = j + 30) {
+            for (int i = hourStartA; i <= hourEndA; i++) {
+                for (int j = 0; j < 60; j = j + 10) {
                     LocalTime localTime = LocalTime.of(i, j);
                     times.add(localTime);
                 }
             }
-            if (hourStart % 1 != 0){
+            if (hourStart.getMinute()  != 0){
+                times.remove(0);
+                times.remove(0);
                 times.remove(0);
             }
-            if (hourEnd % 1 != 0){
+            if (hourEnd.getMinute() != 0){
+                times.remove(times.size()-1);
+                times.remove(times.size()-1);
+                times.remove(times.size()-1);
+            }
+            if (hourEnd.getMinute() == 0){
+                times.remove(times.size()-1);
+                times.remove(times.size()-1);
+                times.remove(times.size()-1);
+                times.remove(times.size()-1);
+                times.remove(times.size()-1);
                 times.remove(times.size()-1);
             }
 
@@ -51,7 +65,7 @@ public class DayService implements Converter<DayDto, Day> {
         return listOfEmptyHours;
     }
 
-    public Day updateDayHourSet(Long id, float hourStart, float hourEnd){
+    public Day updateDayHourSet(Long id, LocalTime hourStart, LocalTime hourEnd){
         Day day = dayRepository.findDayById(id);
         day.setHourStartDay(hourStart);
         day.setHourEndDay(hourEnd);

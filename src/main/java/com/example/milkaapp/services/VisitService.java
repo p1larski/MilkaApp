@@ -33,7 +33,7 @@ public class VisitService implements Converter <VisitDto, Visit> {
         LocalTime timeEnd = visitDto.getHourStartVisit();
         int hours = timeEnd.getHour() + hairDres.getHour();
         int minutes = timeEnd.getMinute() + hairDres.getMinutes();
-        if(minutes > 60){
+        if (minutes >= 60){
             int min = minutes-60;
             hours = hours+1;
             LocalTime localTime = LocalTime.of(hours, min);
@@ -61,7 +61,7 @@ public class VisitService implements Converter <VisitDto, Visit> {
     }
     public Visit addVisit(VisitDto visitDto){
         Visit visit = convert(visitDto);
-        Optional<Visit> visitOptional = visitRepository.getVisitByNoteVisit(visitDto.getNoteVisit());
+        Optional<Visit> visitOptional = Optional.ofNullable(visitRepository.getVisitByHourStartVisitAndDay(visitDto.getHourStartVisit(), dayRepository.findDayByDate(visitDto.getDate())));
         if (!visitOptional.isPresent()) {
             visitRepository.save(visit);
         }

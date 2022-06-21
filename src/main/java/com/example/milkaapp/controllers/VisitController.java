@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class VisitController {
     private VisitService visitService;

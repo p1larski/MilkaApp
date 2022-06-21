@@ -1,5 +1,6 @@
 package com.example.milkaapp.models.modelsDto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,8 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 public class DayDto {
     private LocalDate date;
-    private float hourStartDay;
-    private float hourEndDay;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime hourStartDay;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime hourEndDay;
     private String note;
     private List<LocalTime> hoursSet;
 }

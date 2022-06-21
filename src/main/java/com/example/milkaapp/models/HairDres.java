@@ -4,7 +4,14 @@ import java.time.LocalTime;
 
 public enum HairDres {
 
-    CIĘCIE(1,0), KOLORYZACJA(0,30), PIELĘGNACJA(1,30);
+    CIĘCIE(0,40),
+    KOLORYZACJA(2,30),
+    PIELĘGNACJA(1,00),
+    MODELOWANIE(1,30),
+    PASEMKA(1,30),
+    BALEJAŻ(1,30),
+    ONDULACJA(3,00),
+    PRZEDŁUŻANIE(2,00),;
 
     int hour;
     int minutes;

@@ -28,12 +28,9 @@ public class Visit {
     private LocalTime hourStartVisit;
     private LocalTime hourEndVisit;
 
-    /*@ManyToOne
-    private Client client;*/
-
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dayId")
+    @JoinColumn(name = "day_id")
     private Day day;
 
     public Visit() {

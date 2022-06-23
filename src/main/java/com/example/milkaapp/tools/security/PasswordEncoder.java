@@ -1,4 +1,4 @@
-package com.example.milkaapp.security;
+package com.example.milkaapp.tools.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

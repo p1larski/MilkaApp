@@ -1,4 +1,4 @@
-package com.example.milkaapp.security.config;
+package com.example.milkaapp.tools.security.config;
 
 import com.example.milkaapp.services.UserService;
 import lombok.AllArgsConstructor;
@@ -23,11 +23,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registration")
+                .antMatchers("/registration/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated().and()
                 .formLogin();
+        http.csrf().disable()
+                .logout()
+                .logoutUrl("/logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID");
     }
 
     @Override

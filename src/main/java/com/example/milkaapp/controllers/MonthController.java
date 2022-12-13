@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.YearMonth;
 import java.util.*;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class MonthController {
@@ -29,7 +30,7 @@ public class MonthController {
     }
 
     @GetMapping("/months/counter")
-    public int getMonthsCount(){
+    public int getMonthsCount() {
         return monthService.countOfMonths();
     }
 
@@ -37,8 +38,9 @@ public class MonthController {
     public String deleteMonth(@PathVariable YearMonth yearAndMonth) {
         return monthService.deleteMonth(yearAndMonth);
     }
+
     @GetMapping(value = {"/month/{yearMonth}"})
-    public Month getMonthByYearMonth(@PathVariable YearMonth yearMonth){
+    public Month getMonthByYearMonth(@PathVariable YearMonth yearMonth) {
         return monthService.getMonthByYearMonth(yearMonth);
     }
 }

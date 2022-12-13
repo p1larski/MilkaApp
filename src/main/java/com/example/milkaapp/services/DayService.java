@@ -4,10 +4,7 @@ import com.example.milkaapp.models.Day;
 import com.example.milkaapp.models.modelsDto.DayDto;
 import com.example.milkaapp.models.Visit;
 import com.example.milkaapp.repositories.DayRepository;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalTime;
@@ -27,49 +24,48 @@ public class DayService implements Converter<DayDto, Day> {
         int hourStartA = hourStart.getHour();
         int hourEndA = hourEnd.getHour();
         List<LocalTime> times = new ArrayList<>();
-            for (int i = hourStartA; i <= hourEndA; i++) {
-                for (int j = 0; j < 60; j = j + 10) {
-                    LocalTime localTime = LocalTime.of(i, j);
-                    times.add(localTime);
-                }
+        for (int i = hourStartA; i <= hourEndA; i++) {
+            for (int j = 0; j < 60; j = j + 10) {
+                LocalTime localTime = LocalTime.of(i, j);
+                times.add(localTime);
             }
-            if (hourStart.getMinute()  != 0){
-                times.remove(0);
-                times.remove(0);
-                times.remove(0);
-            }
-            if (hourEnd.getMinute() != 0){
-                times.remove(times.size()-1);
-                times.remove(times.size()-1);
-                times.remove(times.size()-1);
-            }
-            if (hourEnd.getMinute() == 0){
-                times.remove(times.size()-1);
-                times.remove(times.size()-1);
-                times.remove(times.size()-1);
-                times.remove(times.size()-1);
-                times.remove(times.size()-1);
-                times.remove(times.size()-1);
-            }
+        }
+        if (hourStart.getMinute() != 0) {
+            times.remove(0);
+            times.remove(0);
+            times.remove(0);
+        }
+        if (hourEnd.getMinute() != 0) {
+            times.remove(times.size() - 1);
+            times.remove(times.size() - 1);
+            times.remove(times.size() - 1);
+        }
+        if (hourEnd.getMinute() == 0) {
+            times.remove(times.size() - 1);
+            times.remove(times.size() - 1);
+            times.remove(times.size() - 1);
+            times.remove(times.size() - 1);
+            times.remove(times.size() - 1);
+            times.remove(times.size() - 1);
+        }
 
         return times;
     }
 
-    public List<LocalTime> hoursReadyToBook (List<LocalTime> listOfEmptyHours, Visit visit){
+    public List<LocalTime> hoursReadyToBook(List<LocalTime> listOfEmptyHours, Visit visit) {
         Predicate<LocalTime> isInRange = localTime ->
-                localTime.isAfter(visit.getHourStartVisit())
-                        && localTime.isBefore(visit.getHourEndVisit())
+                localTime.isAfter(visit.getHourStartVisit()) && localTime.isBefore(visit.getHourEndVisit())
                         || localTime.equals(visit.getHourStartVisit());
 
         listOfEmptyHours.removeIf(isInRange);
         return listOfEmptyHours;
     }
 
-    public Day updateDayHourSet(Long id, LocalTime hourStart, LocalTime hourEnd){
+    public Day updateDayHourSet(Long id, LocalTime hourStart, LocalTime hourEnd) {
         Day day = dayRepository.findDayById(id);
         day.setHourStartDay(hourStart);
         day.setHourEndDay(hourEnd);
-        day.setHoursSet(hourSetMaker(day.getHourStartDay(),day.getHourEndDay()));
+        day.setHoursSet(hourSetMaker(day.getHourStartDay(), day.getHourEndDay()));
         day.getVisitSet().stream()
                 .forEach(visit -> day.setHoursSet(hoursReadyToBook(day.getHoursSet(), visit)));
         return dayRepository.save(day);
@@ -89,7 +85,7 @@ public class DayService implements Converter<DayDto, Day> {
         return day;
     }
 
-    public Day addDay(DayDto dayDto){
+    public Day addDay(DayDto dayDto) {
         Optional<Day> dayOptional = dayRepository.findByHourStartDay(dayDto.getHourStartDay());
         Day day = convert(dayDto);
         if (!dayOptional.isPresent()) {
@@ -98,13 +94,15 @@ public class DayService implements Converter<DayDto, Day> {
         return day;
     }
 
-    public List<Day> getAllDays(){
+    public List<Day> getAllDays() {
         return (List<Day>) dayRepository.findAll();
     }
-    public Day getDayById(Long id){
+
+    public Day getDayById(Long id) {
         return dayRepository.findDayById(id);
     }
-    public String deleteDayById(Long id){
+
+    public String deleteDayById(Long id) {
         dayRepository.delete(dayRepository.findDayById(id));
         return "Day deleted successfully";
     }

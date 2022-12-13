@@ -28,7 +28,8 @@ public class User implements UserDetails {
     private UserRole userRole;
     private Boolean locked = false;
     private Boolean enabled = false;
-    public User(){
+
+    public User() {
     }
 
     public User(String firstName,
@@ -64,9 +65,11 @@ public class User implements UserDetails {
     public String getLastName() {
         return lastName;
     }
-    public String getFirstName(){
+
+    public String getFirstName() {
         return firstName;
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

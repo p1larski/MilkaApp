@@ -2,10 +2,7 @@ package com.example.milkaapp.services;
 
 import com.example.milkaapp.models.ConfirmationToken;
 import com.example.milkaapp.models.User;
-import com.example.milkaapp.models.modelsDto.UserDto;
 import com.example.milkaapp.repositories.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -40,14 +37,13 @@ public class UserService implements UserDetailsService {
                                 String.format(USER_NOT_FOUND_MSG, email)));
     }
 
-    //Responsible for checking possibility to use this user email, if not used before then encode pass and save
-    public String signUpUser(User user){
+    public String signUpUser(User user) {
         boolean userExists = userRepository.findClientByEmail(user.getEmail())
                 .isPresent();
-        if (userExists){
+        if (userExists) {
             throw new IllegalStateException("email already taken");
         }
-        String encodedPassword =  bCryptPasswordEncoder
+        String encodedPassword = bCryptPasswordEncoder
                 .encode(user.getPassword());
 
         user.setPassword(encodedPassword);
@@ -66,10 +62,13 @@ public class UserService implements UserDetailsService {
         return token;
     }
 
-    public String confirmUser(String email ){
+    public String confirmUser(String email) {
         User user = userRepository.findUserByEmail(email);
         user.setEnabled(true);
-        return "te";
+        return "User confirmed";
     }
 
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findClientByEmail(email);
+    }
 }

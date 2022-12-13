@@ -1,6 +1,5 @@
 package com.example.milkaapp.models.modelsDto;
 
-import com.example.milkaapp.models.UserRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

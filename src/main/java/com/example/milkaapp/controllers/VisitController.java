@@ -20,11 +20,12 @@ public class VisitController {
 
     @PostMapping("/visit/new/save")
     public Visit saveVisit(@RequestBody VisitDto visitDto) {
-       return visitService.addVisit(visitDto);
+        return visitService.addVisit(visitDto);
     }
+
     @DeleteMapping("/visit/{date}/{hourStart}")
     public String deleteVisit(@PathVariable("date")
-                                  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,@PathVariable LocalTime hourStart){
+                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date, @PathVariable LocalTime hourStart) {
         return visitService.deleteVisit(date, hourStart);
     }
 }

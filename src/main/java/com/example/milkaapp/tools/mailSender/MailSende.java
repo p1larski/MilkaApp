@@ -9,17 +9,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class MailSende {
 
-        @Autowired
-        private JavaMailSender emailSender;
+    @Autowired
+    private JavaMailSender emailSender;
 
-        @Async
-        public void sendSimpleMessage(String to, String token) {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("email");
-            message.setTo(to);
-            message.setSubject("Potwierdzenie adresu email");
-            message.setText(token);
-            emailSender.send(message);
-        }
+    @Async
+    public void sendSimpleMessage(String to, String token) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("spok0@o2.pl");
+        message.setTo(to);
+        message.setSubject("Potwierdzenie adresu email");
+        message.setText(token);
+        emailSender.send(message);
+    }
 
 }

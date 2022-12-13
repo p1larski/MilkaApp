@@ -2,9 +2,9 @@ package com.example.milkaapp.models;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import java.time.YearMonth;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -22,7 +22,7 @@ public class Month {
     public Month() {
     }
 
-    public Month( boolean done, Set<Day> days) {
+    public Month(boolean done, Set<Day> days) {
         this.done = done;
         this.days = days;
     }
@@ -30,7 +30,7 @@ public class Month {
     @OneToMany(mappedBy = "month", cascade = CascadeType.ALL)
     private Set<Day> days = new TreeSet<>();
 
-    public void addDay (Day day){
+    public void addDay(Day day) {
         days.add(day);
         day.setMonth(this);
     }

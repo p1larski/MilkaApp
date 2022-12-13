@@ -1,4 +1,5 @@
 package com.example.milkaapp.models;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -35,7 +36,7 @@ public class Day implements Comparable<Day> {
     private Month month;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "day",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "day", cascade = CascadeType.ALL)
     private Set<Visit> visitSet;
 
     public Day() {
@@ -50,12 +51,13 @@ public class Day implements Comparable<Day> {
         this.note = note;
         this.visitSet = visitSet;
     }
+
     @Override
-    public int compareTo(Day day){
+    public int compareTo(Day day) {
         return this.getDate().compareTo(day.getDate());
     }
 
-    public void addVisit (Visit visit){
+    public void addVisit(Visit visit) {
         visitSet.add(visit);
     }
 }

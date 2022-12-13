@@ -4,8 +4,6 @@ import com.example.milkaapp.models.ConfirmationToken;
 import com.example.milkaapp.models.User;
 import com.example.milkaapp.models.UserRole;
 import com.example.milkaapp.models.modelsDto.UserDto;
-import com.example.milkaapp.repositories.UserRepository;
-import com.example.milkaapp.services.UserService;
 import com.example.milkaapp.tools.mailSender.MailSende;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +31,7 @@ public class RegistrationService {
 
         String link = "http://localhost:8080/registration/confirm?token=" + token;
 
-        mailSende.sendSimpleMessage(userDto.getEmail(), link);
+        /*mailSende.sendSimpleMessage(userDto.getEmail(), link);*/
 
         return token;
     }

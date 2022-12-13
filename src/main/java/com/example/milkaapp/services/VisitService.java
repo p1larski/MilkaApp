@@ -15,7 +15,7 @@ import java.util.Optional;
 
 
 @Component
-public class VisitService implements Converter <VisitDto, Visit> {
+public class VisitService implements Converter<VisitDto, Visit> {
 
     private DayRepository dayRepository;
     private DayService dayService;
@@ -28,22 +28,20 @@ public class VisitService implements Converter <VisitDto, Visit> {
         this.visitRepository = visitRepository;
     }
 
-    private LocalTime dateFinish (VisitDto visitDto) {
+    private LocalTime dateFinish(VisitDto visitDto) {
         HairDres hairDres = HairDres.valueOf(visitDto.getHairDresEnum());
         LocalTime timeEnd = visitDto.getHourStartVisit();
         int hours = timeEnd.getHour() + hairDres.getHour();
         int minutes = timeEnd.getMinute() + hairDres.getMinutes();
-        if (minutes >= 60){
-            int min = minutes-60;
-            hours = hours+1;
+        if (minutes >= 60) {
+            int min = minutes - 60;
+            hours = hours + 1;
             LocalTime localTime = LocalTime.of(hours, min);
             return localTime;
         }
-            LocalTime localTime = LocalTime.of(hours, minutes);
+        LocalTime localTime = LocalTime.of(hours, minutes);
         return localTime;
     }
-
-
 
     @Override
     public Visit convert(VisitDto source) {
@@ -59,7 +57,8 @@ public class VisitService implements Converter <VisitDto, Visit> {
         dayOfVisit.setHoursSet(dayService.hoursReadyToBook(dayOfVisit.getHoursSet(), visit));
         return visit;
     }
-    public Visit addVisit(VisitDto visitDto){
+
+    public Visit addVisit(VisitDto visitDto) {
         Visit visit = convert(visitDto);
         Optional<Visit> visitOptional = Optional.ofNullable(visitRepository.getVisitByHourStartVisitAndDay(visitDto.getHourStartVisit(), dayRepository.findDayByDate(visitDto.getDate())));
         if (!visitOptional.isPresent()) {
@@ -67,8 +66,11 @@ public class VisitService implements Converter <VisitDto, Visit> {
         }
         return visit;
     }
-    public String deleteVisit(LocalDate date, LocalTime hourStart){
-      visitRepository.delete(visitRepository.getVisitByHourStartVisitAndDay(hourStart, dayRepository.findDayByDate(date)));
+
+    public String deleteVisit(LocalDate date, LocalTime hourStart) {
+        visitRepository.delete(
+                visitRepository.getVisitByHourStartVisitAndDay
+                        (hourStart, dayRepository.findDayByDate(date)));
         return "Pomyślnie usunięto zaplanowaną wizytę";
     }
 }

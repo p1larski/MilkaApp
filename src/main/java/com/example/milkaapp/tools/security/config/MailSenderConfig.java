@@ -15,7 +15,7 @@ public class MailSenderConfig {
         mailSender.setHost("poczta.o2.pl");
         mailSender.setPort(465);
         mailSender.setUsername("spok0@o2.pl");
-        mailSender.setPassword("***");
+        mailSender.setPassword("****");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

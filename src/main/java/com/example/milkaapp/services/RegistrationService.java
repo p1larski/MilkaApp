@@ -30,8 +30,9 @@ public class RegistrationService {
                         UserRole.USER));
 
         String link = "http://localhost:8080/registration/confirm?token=" + token;
-
+        System.out.println(link);
         /*mailSende.sendSimpleMessage(userDto.getEmail(), link);*/
+
 
         return token;
     }
